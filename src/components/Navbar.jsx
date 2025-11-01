@@ -44,7 +44,7 @@ export default function Navbar() {
               </>
             )}
 
-            {user && user.role !== "admin" && (
+            {user && user.user.role === "admin" && (
               <>
                 {" "}
                 <Link
@@ -56,7 +56,7 @@ export default function Navbar() {
                 <div className="h-6 border-2" />
               </>
             )}
-            {user && (
+            {/* {user && (
               <>
                 <Link
                   to="/profile"
@@ -66,7 +66,7 @@ export default function Navbar() {
                 </Link>
                 <div className="h-6 border-2" />
               </>
-            )}
+            )} */}
 
             {location.pathname.toLowerCase() === "/" && (
               <>

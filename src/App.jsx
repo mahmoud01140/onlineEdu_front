@@ -16,16 +16,16 @@ import Login from "./pages/Auth/Login";
 import StudentStatusPage from "./pages/StudentStatusPage";
 import FormPage from "./pages/FormPage";
 import useAuthStore from "./stores/useAuthStore";
-import ProfilePage from "./pages/ProfilePage";
+// import ProfilePage from "./pages/ProfilePage";
 import AdminDashboard from "./pages/adminDashboard";
 import StudyPage from "./pages/StudyPage";
 import LevelExamPage from "./pages/levelExamPage";
 import LiveExamPage from "./pages/LiveExamPage";
+import NotFoundPage from "./pages/NotFoundPage";
 function App() {
   const { checkAuth, user } = useAuthStore();
   useEffect(() => {
     checkAuth();
-    console.log(user);
   }, [checkAuth]);
   const location = useLocation();
 
@@ -37,16 +37,16 @@ function App() {
   console.log(user)
   return (
     <div className="min-h-screen flex flex-col">
-      <Navbar />
+      {!shouldHideNavbar && <Navbar />}
       <main className="flex-grow container m-auto">
         <Routes>
           <Route path="/" element={<HomePage />} />
           {/* <Route path="/register" element={<Register />} /> */}
-          <Route path="/Login" element={<Login />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/register" element={<StudentStatusPage />} />
           <Route path="/studentform" element={<FormPage />} />
-          <Route path="/profile" element={<ProfilePage />} />
-          <Route path="/admin" element={<AdminDashboard />} />
+          {/* <Route path="/profile" element={<ProfilePage />} /> */}
+          <Route path="/admin" element={user?.user?.role === "admin" ? <AdminDashboard /> : <Navigate to="/" />} />
           <Route
             path="/study"
             element={
@@ -60,6 +60,8 @@ function App() {
             }
           />
           <Route path="/levelExam" element={<LevelExamPage />} />
+          {/* Catch-all route for 404 errors */}
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </main>
 

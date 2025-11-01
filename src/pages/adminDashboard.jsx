@@ -447,7 +447,7 @@ const DashboardHome = () => {
         <StatsSection
           title="إحصائيات الدروس"
           icon={Calendar}
-          data={lessonStats.levelStats}
+          data={lessonStats?.levelStats}
           renderItem={(stat) => (
             <>
               <div className="flex items-center gap-3">

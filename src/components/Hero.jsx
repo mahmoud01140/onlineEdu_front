@@ -92,9 +92,9 @@ const AcademicHero = () => {
 
             <motion.div
               variants={itemVariants}
-              className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 pt-6"
+              className="flex flex-row gap-4 justify-center items-center pt-6"
             >
-              <div className="flex items-center justify-end">
+              <div className="hidden sm:flex items-center justify-end">
                 <div className="bg-blue-100 p-3 rounded-full ml-3">
                   <GraduationCap className="h-5 w-5 sm:h-6 sm:w-6 text-blue-600" />
                 </div>
