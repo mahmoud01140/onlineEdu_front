@@ -8,16 +8,16 @@ import {
   MapPin,
   BookOpen,
   Mail,
-  Edit,
-  Save,
-  X,
+  School,
+  Clock,
+  Award,
+  Star,
 } from "lucide-react";
 import useAuthStore from "../stores/useAuthStore";
 
 export default function StudentProfile() {
-  const { user, updateProfile } = useAuthStore();
-  const [isEditing, setIsEditing] = useState(false);
-  const [form, setForm] = useState({
+  const { user } = useAuthStore();
+  const [profile, setProfile] = useState({
     name: "",
     email: "",
     age: "",
@@ -37,68 +37,70 @@ export default function StudentProfile() {
   // تحميل بيانات المستخدم عند بدء التحميل
   useEffect(() => {
     if (user) {
-      setForm({
-        name: user.name || "",
-        email: user.email || "",
-        age: user.age || "",
-        schoolType: user.schoolType || "",
-        grade: user.grade || "",
-        parentPhone: user.parentPhone || "",
-        parentJob: user.parentJob || "",
-        address: user.address || "",
-        memorizedAmount: user.memorizedAmount || "",
-        availableTime: user.availableTime || "",
-        dailyMemorize: user.dailyMemorize || "",
-        dailyReview: user.dailyReview || "",
-        dailyRecitation: user.dailyRecitation || "",
-        talents: user.talents || "",
+      setProfile({
+        name: user.user?.name || "غير محدد",
+        email: user.user?.email || "غير محدد",
+        age: user.user?.age || "غير محدد",
+        schoolType: user.user?.schoolType || "غير محدد",
+        grade: user.user?.grade || "غير محدد",
+        parentPhone: user.user?.parentPhone || "غير محدد",
+        parentJob: user.user?.parentJob || "غير محدد",
+        address: user.user?.address || "غير محدد",
+        memorizedAmount: user.user?.memorizedAmount || "غير محدد",
+        availableTime: user.user?.availableTime || "غير محدد",
+        dailyMemorize: user.user?.dailyMemorize || "غير محدد",
+        dailyReview: user.user?.dailyReview || "غير محدد",
+        dailyRecitation: user.user?.dailyRecitation || "غير محدد",
+        talents: user.user?.talents || "غير محدد",
       });
     }
   }, [user]);
 
-  function handleChange(e) {
-    const { name, value } = e.target;
-    setForm((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  }
+  const InfoCard = ({ title, icon: Icon, children, className = "" }) => (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      className={`bg-white rounded-xl shadow-sm border border-gray-100 p-4 sm:p-6 hover:shadow-md transition-shadow ${className}`}
+    >
+      <div className="flex items-center gap-3 mb-4 pb-3 border-b border-gray-100">
+        <div className="p-2 bg-primary/10 rounded-lg">
+          <Icon size={20} className="text-primary" />
+        </div>
+        <h3 className="text-lg font-semibold text-gray-800">{title}</h3>
+      </div>
+      <div className="space-y-3">
+        {children}
+      </div>
+    </motion.div>
+  );
 
-  async function handleSave() {
-    const success = await updateProfile(form);
-    if (success) {
-      setIsEditing(false);
-    }
-  }
+  const InfoItem = ({ label, value, icon: Icon }) => (
+    <div className="flex flex-col xs:flex-row xs:justify-between xs:items-start gap-1 xs:gap-2 py-2">
+      <div className="flex items-center gap-2 text-gray-600 min-w-[120px]">
+        {Icon && <Icon size={14} className="text-gray-400 flex-shrink-0" />}
+        <span className="text-sm font-medium whitespace-nowrap">{label}</span>
+      </div>
+      <span className="text-right font-medium text-gray-800 break-words xs:text-left xs:flex-1">
+        {value || "غير محدد"}
+      </span>
+    </div>
+  );
 
-  function handleCancel() {
-    if (user) {
-      setForm({
-        name: user.name || "",
-        email: user.email || "",
-        age: user.age || "",
-        schoolType: user.schoolType || "",
-        grade: user.grade || "",
-        parentPhone: user.parentPhone || "",
-        parentJob: user.parentJob || "",
-        address: user.address || "",
-        memorizedAmount: user.memorizedAmount || "",
-        availableTime: user.availableTime || "",
-        dailyMemorize: user.dailyMemorize || "",
-        dailyReview: user.dailyReview || "",
-        dailyRecitation: user.dailyRecitation || "",
-        talents: user.talents || "",
-      });
-    }
-    setIsEditing(false);
-  }
+  const StatCard = ({ icon: Icon, label, value, color = "text-primary" }) => (
+    <div className="bg-white rounded-lg p-3 sm:p-4 text-center shadow-sm border border-gray-100">
+      <Icon size={20} className={`mx-auto mb-2 ${color} sm:size-6`} />
+      <p className="text-xs sm:text-sm text-gray-600 mb-1">{label}</p>
+      <p className="font-semibold text-gray-800 text-sm sm:text-base">{value}</p>
+    </div>
+  );
 
   if (!user) {
     return (
-      <div className="flex justify-center items-center h-64">
+      <div className="flex justify-center items-center min-h-64 p-4">
         <div className="text-center">
           <h2 className="text-xl font-bold">يجب تسجيل الدخول أولاً</h2>
-          <p className="text-gray-600">لا يمكن عرض الملف الشخصي بدون تسجيل الدخول</p>
+          <p className="text-gray-600 mt-2">لا يمكن عرض الملف الشخصي بدون تسجيل الدخول</p>
         </div>
       </div>
     );
@@ -110,287 +112,150 @@ export default function StudentProfile() {
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="max-w-4xl mx-auto p-6"
+      className="max-w-6xl mx-auto p-3 sm:p-4 md:p-6"
     >
-      <div className="flex justify-between items-center mb-6">
-        <h2 className="text-2xl font-bold">الملف الشخصي للطالب</h2>
-        <div className="flex gap-2">
-          {isEditing ? (
-            <>
-              <button onClick={handleSave} className="btn btn-primary">
-                <Save size={18} className="ml-1" />
-                حفظ
-              </button>
-              <button onClick={handleCancel} className="btn btn-ghost">
-                <X size={18} className="ml-1" />
-                إلغاء
-              </button>
-            </>
-          ) : (
-            <button onClick={() => setIsEditing(true)} className="btn btn-primary">
-              <Edit size={18} className="ml-1" />
-              تعديل
-            </button>
-          )}
-        </div>
+      {/* Header - Responsive */}
+      <div className="text-center mb-6 sm:mb-8">
+        <motion.div
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
+          transition={{ delay: 0.2, type: "spring" }}
+          className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4"
+        >
+          <User size={24} className="text-white sm:size-8 md:size-10" />
+        </motion.div>
+        <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-800 mb-1 sm:mb-2 px-2 break-words">
+          {profile.name}
+        </h1>
+        <p className="text-gray-600 text-sm sm:text-base">الملف الشخصي للطالب</p>
       </div>
 
-      <div className="bg-white rounded-lg shadow-md p-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* المعلومات الشخصية */}
-          <div className="space-y-4">
-            <h3 className="text-lg font-semibold border-b pb-2">المعلومات الشخصية</h3>
-            
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text">الاسم</span>
-              </label>
-              <div className="relative">
-                <User className="absolute top-3 left-3 opacity-60" size={18} />
-                <input
-                  name="name"
-                  value={form.name}
-                  onChange={handleChange}
-                  type="text"
-                  className="input input-bordered w-full pl-10"
-                  disabled={!isEditing}
-                />
-              </div>
-            </div>
+      {/* Main Grid - Responsive */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
+        {/* المعلومات الشخصية */}
+        <InfoCard title="المعلومات الشخصية" icon={User}>
+          <InfoItem label="الاسم الكامل" value={profile.name} icon={User} />
+          <InfoItem label="البريد الإلكتروني" value={profile.email} icon={Mail} />
+          <InfoItem label="السن" value={profile.age} icon={Calendar} />
+          <InfoItem label="نوع المدرسة" value={profile.schoolType} icon={School} />
+          <InfoItem label="الصف الدراسي" value={profile.grade} icon={BookOpen} />
+        </InfoCard>
 
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text">البريد الإلكتروني</span>
-              </label>
-              <div className="relative">
-                <Mail className="absolute top-3 left-3 opacity-60" size={18} />
-                <input
-                  name="email"
-                  value={form.email}
-                  onChange={handleChange}
-                  type="email"
-                  className="input input-bordered w-full pl-10"
-                  disabled={!isEditing}
-                />
-              </div>
-            </div>
+        {/* معلومات ولي الأمر */}
+        <InfoCard title="معلومات ولي الأمر" icon={Briefcase}>
+          <InfoItem label="رقم التليفون" value={profile.parentPhone} icon={Phone} />
+          <InfoItem label="المهنة" value={profile.parentJob} icon={Briefcase} />
+          <InfoItem label="العنوان" value={profile.address} icon={MapPin} />
+        </InfoCard>
 
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text">السن</span>
-              </label>
-              <div className="relative">
-                <Calendar className="absolute top-3 left-3 opacity-60" size={18} />
-                <input
-                  name="age"
-                  value={form.age}
-                  onChange={handleChange}
-                  type="number"
-                  className="input input-bordered w-full pl-10"
-                  disabled={!isEditing}
-                />
-              </div>
+        {/* المعلومات القرآنية */}
+        <InfoCard title="المعلومات القرآنية" icon={BookOpen} className="lg:col-span-2">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="space-y-3">
+              <InfoItem label="المقدار المحفوظ" value={profile.memorizedAmount} icon={Award} />
+              <InfoItem label="الحفظ اليومي" value={profile.dailyMemorize} icon={BookOpen} />
             </div>
-
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text">نوع المدرسة</span>
-              </label>
-              <select
-                name="schoolType"
-                value={form.schoolType}
-                onChange={handleChange}
-                className="select select-bordered w-full"
-                disabled={!isEditing}
-              >
-                <option value="عام">عام</option>
-                <option value="ازهر">أزهري</option>
-              </select>
-            </div>
-
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text">الصف الدراسي</span>
-              </label>
-              <input
-                name="grade"
-                value={form.grade}
-                onChange={handleChange}
-                type="text"
-                className="input input-bordered w-full"
-                disabled={!isEditing}
-              />
+            <div className="space-y-3">
+              <InfoItem label="المراجعة اليومية" value={profile.dailyReview} icon={BookOpen} />
+              <InfoItem label="التلاوة اليومية" value={profile.dailyRecitation} icon={BookOpen} />
             </div>
           </div>
+        </InfoCard>
 
-          {/* معلومات ولي الأمر */}
-          <div className="space-y-4">
-            <h3 className="text-lg font-semibold border-b pb-2">معلومات ولي الأمر</h3>
-            
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text">رقم تليفون ولي الأمر</span>
-              </label>
-              <div className="relative">
-                <Phone className="absolute top-3 left-3 opacity-60" size={18} />
-                <input
-                  name="parentPhone"
-                  value={form.parentPhone}
-                  onChange={handleChange}
-                  type="tel"
-                  className="input input-bordered w-full pl-10"
-                  disabled={!isEditing}
-                />
-              </div>
-            </div>
-
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text">مهنة ولي الأمر</span>
-              </label>
-              <div className="relative">
-                <Briefcase className="absolute top-3 left-3 opacity-60" size={18} />
-                <input
-                  name="parentJob"
-                  value={form.parentJob}
-                  onChange={handleChange}
-                  type="text"
-                  className="input input-bordered w-full pl-10"
-                  disabled={!isEditing}
-                />
-              </div>
-            </div>
-
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text">العنوان</span>
-              </label>
-              <div className="relative">
-                <MapPin className="absolute top-3 left-3 opacity-60" size={18} />
-                <input
-                  name="address"
-                  value={form.address}
-                  onChange={handleChange}
-                  type="text"
-                  className="input input-bordered w-full pl-10"
-                  disabled={!isEditing}
-                />
-              </div>
-            </div>
+        {/* معلومات إضافية */}
+        <InfoCard title="معلومات إضافية" icon={Star} className="lg:col-span-2">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <InfoItem label="الوقت المتاح" value={profile.availableTime} icon={Clock} />
+            <InfoItem label="المواهب والمهارات" value={profile.talents} icon={Star} />
           </div>
+        </InfoCard>
+      </div>
 
-          {/* المعلومات القرآنية */}
-          <div className="space-y-4">
-            <h3 className="text-lg font-semibold border-b pb-2">المعلومات القرآنية</h3>
-            
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text">كم تحفظ من القرآن؟</span>
-              </label>
-              <input
-                name="memorizedAmount"
-                value={form.memorizedAmount}
-                onChange={handleChange}
-                type="text"
-                className="input input-bordered w-full"
-                disabled={!isEditing}
-              />
-            </div>
+      {/* Quick Stats - Responsive */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.4 }}
+        className="mt-4 sm:mt-6 grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4"
+      >
+        <StatCard 
+          icon={BookOpen} 
+          label="الحفظ اليومي" 
+          value={profile.dailyMemorize} 
+          color="text-primary" 
+        />
+        <StatCard 
+          icon={Award} 
+          label="المقدار المحفوظ" 
+          value={profile.memorizedAmount} 
+          color="text-secondary" 
+        />
+        <StatCard 
+          icon={Clock} 
+          label="الوقت المتاح" 
+          value={profile.availableTime} 
+          color="text-blue-500" 
+        />
+        <StatCard 
+          icon={School} 
+          label="الصف الدراسي" 
+          value={profile.grade} 
+          color="text-green-500" 
+        />
+      </motion.div>
 
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text">مقدار الحفظ اليومي</span>
-              </label>
-              <select
-                name="dailyMemorize"
-                value={form.dailyMemorize}
-                onChange={handleChange}
-                className="select select-bordered w-full"
-                disabled={!isEditing}
-              >
-                <option value="">اختر</option>
-                <option value="نصف جزء">نصف جزء</option>
-                <option value="جزء">جزء</option>
-              </select>
-            </div>
-
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text">مقدار المراجعة اليومي</span>
-              </label>
-              <select
-                name="dailyReview"
-                value={form.dailyReview}
-                onChange={handleChange}
-                className="select select-bordered w-full"
-                disabled={!isEditing}
-              >
-                <option value="">اختر</option>
-                <option value="نصف جزء">نصف جزء</option>
-                <option value="جزء">جزء</option>
-              </select>
-            </div>
-
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text">مقدار التلاوة اليومي</span>
-              </label>
-              <select
-                name="dailyRecitation"
-                value={form.dailyRecitation}
-                onChange={handleChange}
-                className="select select-bordered w-full"
-                disabled={!isEditing}
-              >
-                <option value="">اختر</option>
-                <option value="نصف جزء">نصف جزء</option>
-                <option value="جزء">جزء</option>
-              </select>
-            </div>
+      {/* معلومات النظام - Responsive */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.6 }}
+        className="mt-4 sm:mt-6 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-4 sm:p-6 border border-blue-100"
+      >
+        <h3 className="text-lg font-semibold text-blue-800 mb-3 sm:mb-4">معلومات النظام</h3>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 text-sm">
+          <div className="text-center bg-white/50 rounded-lg p-3">
+            <p className="text-blue-600 font-medium text-xs sm:text-sm">تاريخ التسجيل</p>
+            <p className="text-blue-800 font-semibold mt-1 text-sm">
+              {new Date(user.createdAt || Date.now()).toLocaleDateString('ar-SA')}
+            </p>
           </div>
-
-          {/* معلومات إضافية */}
-          <div className="space-y-4">
-            <h3 className="text-lg font-semibold border-b pb-2">معلومات إضافية</h3>
-            
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text">الوقت المتاح</span>
-              </label>
-              <input
-                name="availableTime"
-                value={form.availableTime}
-                onChange={handleChange}
-                type="text"
-                className="input input-bordered w-full"
-                disabled={!isEditing}
-              />
-            </div>
-
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text">المواهب والمهارات</span>
-              </label>
-              <input
-                name="talents"
-                value={form.talents}
-                onChange={handleChange}
-                className="input input-bordered w-full"
-                disabled={!isEditing}
-                placeholder="مثال: الرسم، الخط، إلخ"
-              />
-            </div>
-
-            <div className="bg-blue-50 p-4 rounded-lg mt-4">
-              <h4 className="font-semibold text-blue-800">معلومات إضافية غير قابلة للتعديل</h4>
-              <div className="mt-2 space-y-2 text-sm text-blue-700">
-                <p>تاريخ التسجيل: {new Date(user.createdAt || Date.now()).toLocaleDateString('ar-SA')}</p>
-                <p>الحالة: {user.isActive ? 'نشط' : 'غير نشط'}</p>
-                <p>آخر تحديث: {new Date(user.updatedAt || Date.now()).toLocaleDateString('ar-SA')}</p>
-              </div>
-            </div>
+          <div className="text-center bg-white/50 rounded-lg p-3">
+            <p className="text-blue-600 font-medium text-xs sm:text-sm">الحالة</p>
+            <p className="text-blue-800 font-semibold mt-1">
+              <span className={`px-2 py-1 rounded-full text-xs ${
+                user.isActive ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+              }`}>
+                {user.isActive ? 'نشط' : 'غير نشط'}
+              </span>
+            </p>
+          </div>
+          <div className="text-center bg-white/50 rounded-lg p-3">
+            <p className="text-blue-600 font-medium text-xs sm:text-sm">آخر تحديث</p>
+            <p className="text-blue-800 font-semibold mt-1 text-sm">
+              {new Date(user.updatedAt || Date.now()).toLocaleDateString('ar-SA')}
+            </p>
           </div>
         </div>
+      </motion.div>
+
+      {/* Mobile Optimized Layout for Small Screens */}
+      <div className="block lg:hidden mt-4">
+        <InfoCard title="ملخص سريع" icon={Star}>
+          <div className="space-y-2 text-sm">
+            <div className="flex justify-between">
+              <span className="text-gray-600">المدرسة:</span>
+              <span className="font-medium">{profile.schoolType}</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-gray-600">العمر:</span>
+              <span className="font-medium">{profile.age}</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-gray-600">ولي الأمر:</span>
+              <span className="font-medium">{profile.parentPhone}</span>
+            </div>
+          </div>
+        </InfoCard>
       </div>
     </motion.div>
   );

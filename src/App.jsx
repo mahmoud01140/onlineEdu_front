@@ -16,7 +16,7 @@ import Login from "./pages/Auth/Login";
 import StudentStatusPage from "./pages/StudentStatusPage";
 import FormPage from "./pages/FormPage";
 import useAuthStore from "./stores/useAuthStore";
-// import ProfilePage from "./pages/ProfilePage";
+import ProfilePage from "./pages/ProfilePage";
 import AdminDashboard from "./pages/adminDashboard";
 import StudyPage from "./pages/StudyPage";
 import LevelExamPage from "./pages/levelExamPage";
@@ -45,7 +45,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<StudentStatusPage />} />
           <Route path="/studentform" element={<FormPage />} />
-          {/* <Route path="/profile" element={<ProfilePage />} /> */}
+          <Route path="/profile" element={<ProfilePage />} />
           <Route path="/admin" element={user?.user?.role === "admin" ? <AdminDashboard /> : <Navigate to="/" />} />
           <Route
             path="/study"
