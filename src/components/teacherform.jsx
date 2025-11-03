@@ -115,21 +115,21 @@ export default function GeneralRegistrationForm() {
   return (
     <div
       dir="rtl"
-      className="min-h-screen flex items-center justify-center p-6"
+      className="min-h-screen flex items-center justify-center"
     >
       <motion.form
         onSubmit={handleSubmit}
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="max-w-4xl w-full bg-base-100 shadow-xl rounded-2xl p-6 md:p-10"
+        className="max-w-4xl w-full bg-base-100 shadow-xl rounded-2xl p-3 md:p-10"
       >
-        <div className="flex items-center gap-3 mb-4">
+        {/* <div className="flex items-center gap-3 mb-4">
           <User className="w-6 h-6" />
           <h2 className="text-2xl font-semibold">
             استمارة الالتحاق بالدورة - دار أبو يوسف
           </h2>
-        </div>
+        </div> */}
 
         {/* Basic info */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -534,12 +534,12 @@ export default function GeneralRegistrationForm() {
           </label>
         </div>
 
-        <div className="mt-6 flex items-center justify-between gap-3">
+        <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 justify-end mt-4">
           <motion.button
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.98 }}
             type="submit"
-            className="btn btn-primary flex items-center gap-2"
+            className="btn btn-primary w-full sm:w-auto sm:text-sm"
           >
             <CheckCircle className="w-5 h-5" />{" "}
             {isLoading
@@ -586,9 +586,9 @@ export default function GeneralRegistrationForm() {
                 consent: false,
               })
             }
-            className="btn btn-ghost flex items-center gap-2"
+            className="btn btn-ghost w-full sm:w-auto"
           >
-            <XCircle className="w-5 h-5" /> مسح
+            <XCircle className="w-5 h-5" /> اعادة تعيين
           </motion.button>
         </div>
       </motion.form>

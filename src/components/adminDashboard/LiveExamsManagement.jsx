@@ -692,7 +692,7 @@ const LiveExamForm = ({ exam, groups, onSave, onCancel }) => {
 
 // Live Exam Details Component (unchanged)
 const LiveExamDetails = ({ exam, onClose }) => {
-  console.log(exam)
+  console.log(exam);
   const formatDateTime = (examDate, examTime) => {
     const date = new Date(examDate);
     return {
@@ -808,46 +808,32 @@ const LiveExamDetails = ({ exam, onClose }) => {
         )}
         {exam.users.length > 0 && (
           <div className="bg-red-50 p-4 rounded-lg">
-            <h3 className="font-semibold text-red-800 mb-2">الطلاب المسجلين</h3>
-            <p className="text-red-700">
-              {exam.users.map((user) => user?.name).join(", ")}
-            </p>
-            <p className="text-red-700">
-              {exam.users.map((user) => user?.email).join(", ")}
-            </p>
-            <p className="text-red-700">
-              {/* {exam.users.map((user) => user?.phone).join(", ")} */} 
-            </p>
-            {/* <p className="text-red-700">
-              {exam.users.map((user) => user.age).join(", ")}
-            </p>
-            <p className="text-red-700">
-              {exam.users.map((user) => user.address).join(", ")}
-            </p>
-            <p className="text-red-700">
-              {exam.users.map((user) => user.level).join(", ")}
-            </p>
-            <p className="text-red-700">
-              {exam.users.map((user) => user.profileImage).join(", ")}
-            </p>
-            <p className="text-red-700">
-              {exam.users.map((user) => user.isActive).join(", ")}
-            </p>
-            <p className="text-red-700">
-              {exam.users.map((user) => user.isPassLiveEx).join(", ")}
-            </p>
-            <p className="text-red-700">
-              {exam.users.map((user) => user.isPasslevelEx).join(", ")}
-            </p>
-            <p className="text-red-700">
-              {exam.users.map((user) => user.permissions).join(", ")}
-            </p>
-            <p className="text-red-700">
-              {exam.users.map((user) => user.department).join(", ")}
-            </p>
-            <p className="text-red-700">
-              {exam.users.map((user) => user.groups).join(", ")}
-            </p> */}
+            <h3 className="font-semibold text-red-800 mb-3">الطلاب المسجلين</h3>
+
+            <div className="overflow-x-auto">
+              <table className="min-w-full border border-red-200 text-right text-sm">
+                <thead className="bg-red-100">
+                  <tr>
+                    <th className="px-4 py-2 border-b border-red-200">الاسم</th>
+                    <th className="px-4 py-2 border-b border-red-200">
+                      البريد الإلكتروني
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {exam.users.map((user, index) => (
+                    <tr key={index} className="hover:bg-red-100">
+                      <td className="px-4 py-2 border-b border-red-200">
+                        {user?.name}
+                      </td>
+                      <td className="px-4 py-2 border-b border-red-200">
+                        {user?.email}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         )}
         {/* Action Buttons */}

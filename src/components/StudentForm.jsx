@@ -95,13 +95,13 @@ export default function StudentForm() {
       transition={{ duration: 0.5 }}
       className="max-w-3xl mx-auto p-6"
     >
-      <motion.h2
+      {/* <motion.h2
         initial={{ scale: 0.98 }}
         animate={{ scale: 1 }}
         className="text-2xl font-bold text-center mb-6"
       >
         استمارة تسجيل طالب — اكاديمية أبو يوسف لتحفيظ القرآن
-      </motion.h2>
+      </motion.h2> */}
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -485,12 +485,13 @@ export default function StudentForm() {
             placeholder="مثال: الرسم، الخط، إلخ"
           />
         </div>
-        <div className="flex gap-2 justify-end">
-          <button type="submit" className="btn btn-primary">
+        <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 justify-end mt-4">
+          <button type="submit" className="btn btn-primary w-full sm:w-auto">
             {isLoading
               ? "جاري التسجيل"
               : "حفظ والانتقال الى امتحان تحديد المستوى"}
           </button>
+
           <button
             type="button"
             onClick={() =>
@@ -521,7 +522,7 @@ export default function StudentForm() {
                 talents: "",
               })
             }
-            className="btn btn-ghost"
+            className="btn btn-ghost w-full sm:w-auto"
           >
             إعادة تعيين
           </button>
