@@ -56,7 +56,7 @@ const useUserStore = create((set, get) => ({
           currentPage: response.data.page
         }
       });
-
+        console.log(get().pagination)
       return response.data.data.users;
     } catch (error) {
       const errorMessage = error.response?.data?.message || "فشل في تحميل المستخدمين";
@@ -426,7 +426,7 @@ const useUserStore = create((set, get) => ({
   // تطبيق الفلاتر
   applyFilters: (newFilters) => {
     const currentFilters = get().filters;
-    const mergedFilters = { ...currentFilters, ...newFilters, page: 1 };
+    const mergedFilters = { ...currentFilters, ...newFilters, };
     
     set({ filters: mergedFilters });
     get().fetchUsers(mergedFilters);
