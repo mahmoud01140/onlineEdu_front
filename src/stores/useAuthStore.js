@@ -61,7 +61,7 @@ const useAuthStore = create((set) => ({
     } catch (error) {
       console.log(error);
       const errorMessage =
-        error.response?.data?.errors?.map((err) => err).join(", ")  ||
+        error.response?.data?.errors?.map((err) => err).join(", ")  || error.response?.data?.message ||
         "فشل في التسجيل. يرجى المحاولة مرة أخرى.";
       set({ error: errorMessage, isLoading: false });
       toast.error(errorMessage);

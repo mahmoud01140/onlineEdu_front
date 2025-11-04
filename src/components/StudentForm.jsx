@@ -27,7 +27,7 @@ export default function StudentForm() {
     parentsMemorize: "",
     studiedFath: "",
     studiedTuhfa: "",
-    studiedNoor: "",
+    // studiedNoor: "",
     prayerFive: "",
     adhkar: "",
     canUseTelegramZoom: "",
@@ -50,6 +50,7 @@ export default function StudentForm() {
 
   async function handleSubmit(e) {
     e.preventDefault();
+    console.log(form)
     if (
       !form.name ||
       !form.email ||
@@ -66,7 +67,7 @@ export default function StudentForm() {
       !form.parentsMemorize ||
       !form.studiedFath ||
       !form.studiedTuhfa ||
-      !form.studiedNoor ||
+      // !form.studiedNoor ||
       !form.prayerFive ||
       !form.adhkar ||
       !form.canUseTelegramZoom ||
@@ -74,7 +75,7 @@ export default function StudentForm() {
       !form.dailyReview ||
       !form.dailyRecitation ||
       !form.attendNoorCourse ||
-      !form.parentMemorize ||
+      // !form.parentMemorize ||
       !form.planFinishQuran ||
       !form.talents
     ) {
@@ -184,6 +185,7 @@ export default function StudentForm() {
               onChange={handleChange}
               className="select select-bordered"
             >
+               <option>اختر</option>
               <option>عام</option>
               <option>ازهر</option>
             </select>
@@ -269,6 +271,7 @@ export default function StudentForm() {
               onChange={handleChange}
               className="select select-bordered"
             >
+               <option>اختر</option>
               <option value="no">لا</option>
               <option value="yes">نعم</option>
             </select>
@@ -312,6 +315,7 @@ export default function StudentForm() {
               onChange={handleChange}
               className="select select-bordered"
             >
+               <option>اختر</option>
               <option value="no">لا</option>
               <option value="yes">نعم</option>
             </select>
@@ -329,6 +333,7 @@ export default function StudentForm() {
               onChange={handleChange}
               className="select select-bordered"
             >
+               <option>اختر</option>
               <option value="no">لا</option>
               <option value="yes">نعم</option>
             </select>
@@ -344,6 +349,7 @@ export default function StudentForm() {
               onChange={handleChange}
               className="select select-bordered"
             >
+               <option>اختر</option>
               <option value="no">لا</option>
               <option value="yes">نعم</option>
             </select>
@@ -361,6 +367,7 @@ export default function StudentForm() {
               onChange={handleChange}
               className="select select-bordered"
             >
+               <option>اختر</option>
               <option value="no">لا</option>
               <option value="yes">نعم</option>
             </select>
@@ -376,6 +383,7 @@ export default function StudentForm() {
               onChange={handleChange}
               className="select select-bordered"
             >
+               <option>اختر</option>
               <option value="no">لا</option>
               <option value="yes">نعم</option>
             </select>
@@ -393,6 +401,7 @@ export default function StudentForm() {
               onChange={handleChange}
               className="select select-bordered"
             >
+               <option>اختر</option>
               <option value="no">لا</option>
               <option value="yes">نعم</option>
             </select>
@@ -455,6 +464,7 @@ export default function StudentForm() {
             onChange={handleChange}
             className="select select-bordered"
           >
+            <option>اختر</option>
             <option value="no">لا</option>
             <option value="yes">نعم</option>
           </select>
@@ -503,21 +513,21 @@ export default function StudentForm() {
                 parentPhone: "",
                 parentJob: "",
                 address: "",
-                hasSiblings: "no",
+                hasSiblings: "",
                 availableTime: "",
                 memorizedAmount: "",
-                parentsMemorize: "no",
-                studiedFath: "no",
-                studiedTuhfa: "no",
-                studiedNoor: "no",
-                prayerFive: "no",
-                adhkar: "no",
-                canUseTelegramZoom: "no",
+                parentsMemorize: "",
+                studiedFath: "",
+                studiedTuhfa: "",
+                // studiedNoor: "",
+                prayerFive: "",
+                adhkar: "",
+                canUseTelegramZoom: "",
                 dailyMemorization: "",
                 dailyReview: "",
                 dailyRecitation: "",
-                attendNoorCourse: "no",
-                parentMemorize: "no",
+                attendNoorCourse: "",
+                // parentMemorize: "",
                 planFinishQuran: "",
                 talents: "",
               })
